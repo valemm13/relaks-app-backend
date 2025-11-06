@@ -4,16 +4,22 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/user.module';
 import { UserEntity } from './users/entities/users.entity';
+import { ProfesModule } from './profes/profes.module';
+import { MateriasModule } from './materias/materias.module';
+import { Profesor } from './profes/entities/profes.entity';
+import { Materia } from './materias/entities/materia.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite', // o 'mysql' | 'postgres'
-      database: 'database.sqlite', // o tus credenciales
-      entities: [UserEntity],
+      type: 'sqlite',
+      database: 'database.sqlite',
+      entities: [UserEntity, Profesor, Materia],
       synchronize: true, // ⚠️ solo en desarrollo
     }),
     UsersModule,
+    ProfesModule,
+    MateriasModule,
   ],
   controllers: [AppController],
   providers: [AppService],
