@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
-import { Materia } from '../../materias/entities/materia.entity';
+//import { Materia } from '../../materias/entities/materia.entity';
 
 @Entity('profesores')
 export class Profesor {
@@ -12,11 +12,11 @@ export class Profesor {
   @Column({ nullable: true })
   facultad?: string;
 
-  @ManyToMany(() => Materia, (materia) => materia.profesores, { cascade: true })
+  /*@ManyToMany(() => Materia, (materia) => materia.profesores, { cascade: true })
   @JoinTable({
     name: 'profesor_materias',
     joinColumn: { name: 'profesor_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'materia_id', referencedColumnName: 'id' },
   })
-  materias?: Materia[];
+  materias?: Materia[];*/
 }

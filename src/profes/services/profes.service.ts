@@ -3,15 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like, In } from 'typeorm';
 import { Profesor } from '../entities/profes.entity';
 import { CreateProfesorDto } from '../dto/create-profes.dto';
-import { Materia } from '../../materias/entities/materia.entity';
+//import { Materia } from '../../materias/entities/materia.entity';
 
 @Injectable()
 export class ProfesService {
   constructor(
     @InjectRepository(Profesor)
     private readonly profesorRepository: Repository<Profesor>,
-    @InjectRepository(Materia)
-    private readonly materiaRepository: Repository<Materia>,
+    //@InjectRepository(Materia)
+    //private readonly materiaRepository: Repository<Materia>,
   ) {}
 
   async create(dto: CreateProfesorDto): Promise<Profesor> {
@@ -20,12 +20,12 @@ export class ProfesService {
       facultad: dto.facultad,
     });
 
-    if (dto.materiasIds && dto.materiasIds.length > 0) {
+    /*if (dto.materiasIds && dto.materiasIds.length > 0) {
       const materias = await this.materiaRepository.findBy({
         id: In(dto.materiasIds),
       });
       profesor.materias = materias;
-    }
+    }*/
 
     return this.profesorRepository.save(profesor);
   }
