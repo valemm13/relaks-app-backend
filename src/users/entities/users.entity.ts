@@ -1,5 +1,7 @@
 import {Entity,PrimaryGeneratedColumn,Column,OneToOne,OneToMany,CreateDateColumn,UpdateDateColumn,} from 'typeorm';
-//import { WeeklyRoutine } from '../../routines/entities/weekly-routine.entity';
+import { Calificacion } from 'src/calificaciones/entities/calificaciones.entity';
+
+//import { WeeklyRoutine } from '../../routines/entities/weekly-routine.entities';
 @Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn()
@@ -25,6 +27,10 @@ export class UserEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Calificacion, cal => cal.user)
+  calificaciones: Calificacion[];
+
 
   /*Hacer Relaciones
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like, In } from 'typeorm';
 import { Profesor } from '../entities/profes.entity';
 import { CreateProfesorDto } from '../dto/create-profes.dto';
-//import { Materia } from '../../materias/entities/materia.entity';
+//import { Materia } from '../../materias/entities/materia.entities';
 
 @Injectable()
 export class ProfesService {

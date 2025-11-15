@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
-//import { Materia } from '../../materias/entities/materia.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany,ManyToMany, JoinTable } from 'typeorm';
+import { Calificacion } from 'src/calificaciones/entities/calificaciones.entity';
+
+//import { Materia } from '../../materias/entities/materia.entities';
 
 @Entity('profesores')
 export class Profesor {
@@ -11,6 +13,9 @@ export class Profesor {
 
   @Column({ nullable: true })
   facultad?: string;
+
+  @OneToMany(() => Calificacion, (calificacion) => calificacion.profesor)
+  calificaciones: Calificacion[];
 
   /*@ManyToMany(() => Materia, (materia) => materia.profesores, { cascade: true })
   @JoinTable({

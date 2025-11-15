@@ -1,4 +1,5 @@
 import {Entity,PrimaryColumn,Column,OneToOne,OneToMany,CreateDateColumn,UpdateDateColumn, IntegerType,} from 'typeorm';
+import { Calificacion } from 'src/calificaciones/entities/calificaciones.entity';
 
 @Entity('materias')
 export class Materia {
@@ -16,6 +17,9 @@ export class Materia {
 
   @Column({ type: 'float'})
   calificacionTotal: number;
+
+  @OneToMany(() => Calificacion, (calificacion) => calificacion.materia)
+  calificaciones: Calificacion[];
   
   constructor(materia: Materia) {
     Object.assign(this, materia);

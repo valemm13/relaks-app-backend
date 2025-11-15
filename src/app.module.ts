@@ -5,21 +5,24 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/user.module';
 import { UserEntity } from './users/entities/users.entity';
 import { ProfesModule } from './profes/profes.module';
-//import { MateriasModule } from './materias/materias.module';
+import { MateriasModule } from './materias/materias.module';
 import { Profesor } from './profes/entities/profes.entity';
-//import { Materia } from './materias/entities/materia.entity';
+import { Materia } from './materias/entities/materia.entity';
+import { CalificacionesModule } from './calificaciones/calificaciones.module';
+import { Calificacion } from './calificaciones/entities/calificaciones.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'database.sqlite',
-      entities: [UserEntity, Profesor],
+      entities: [UserEntity, Profesor, Calificacion, Materia],
       synchronize: true, // ⚠️ solo en desarrollo
     }),
     UsersModule,
     ProfesModule,
-    //MateriasModule,
+    CalificacionesModule,
+    MateriasModule,
   ],
   controllers: [AppController],
   providers: [AppService],
