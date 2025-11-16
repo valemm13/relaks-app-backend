@@ -1,7 +1,8 @@
-import {Controller,Get,Post,Body,Patch,Param,Delete,ParseIntPipe,} from '@nestjs/common';
+import {Controller,Get,Post,Body,Patch,Param,Delete,ParseIntPipe, UseInterceptors, UploadedFile} from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import {CreateUserDto,UpdateUserDto,UserResponseDto,} from '../dto/create-user.dto';
-
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 /**
  * Controlador de Usuarios
  *
@@ -18,8 +19,38 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './uploads/avatars',
+        filename: (req, file, cb) => {
+          const uniqueName = Date.now() + '-' + file.originalname;
+          cb(null, uniqueName);
+        },
+      }),
+    }),
+  )
+  async create(
+    @Body() createUserDto: CreateUserDto,
+    @UploadedFile() avatar?: Express.Multer.File,
+  ) {
+    if (avatar) {
+      createUserDto.avatar = `/uploads/avatars/${avatar.filename}`;
+    }
+    
     return this.usersService.create(createUserDto);
+  }
+  
+  @Post('login')
+  async login(@Body() body: any) {
+    const { email, password } = body;
+
+    const user = await this.usersService.login(email, password);
+
+    return { 
+      message: "Login exitoso", 
+      user 
+    };
   }
 
   @Get()

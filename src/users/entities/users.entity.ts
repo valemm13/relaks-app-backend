@@ -1,7 +1,6 @@
 import {Entity,PrimaryGeneratedColumn,Column,OneToOne,OneToMany,CreateDateColumn,UpdateDateColumn,} from 'typeorm';
 import { Calificacion } from 'src/calificaciones/entities/calificaciones.entity';
 
-//import { WeeklyRoutine } from '../../routines/entities/weekly-routine.entities';
 @Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn()
@@ -32,13 +31,11 @@ export class UserEntity {
   calificaciones: Calificacion[];
 
 
-  /*Hacer Relaciones
-  @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
-  profile: Profile;
+  //Hacer Relaciones
 
-  @OneToMany(() => WeeklyRoutine, (weeklyRoutine) => weeklyRoutine.user, {
+  @OneToMany(() => Calificacion, (calificacion) => calificacion.user, {
     cascade: true,
   })
-  weeklyRoutines: WeeklyRoutine[]; */
+  calificacion: Calificacion[]; 
 
 }

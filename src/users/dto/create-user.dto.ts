@@ -15,7 +15,7 @@ export class CreateUserDto {
   password: string;
 
   @IsOptional()
-  @IsUrl({}, { message: 'El avatar debe ser una URL válida' })
+  @IsString({ message: 'El avatar debe ser una cadena de texto' })
   avatar?: string;
 }
 
@@ -34,7 +34,7 @@ export class UpdateUserDto {
   password?: string;
 
   @IsOptional()
-  @IsUrl({}, { message: 'El avatar debe ser una URL válida' })
+  @IsString({ message: 'El avatar debe ser una cadena de texto' })
   avatar?: string;
 }
 

@@ -47,8 +47,7 @@ export class UsersService {
   // Obtener un usuario por ID
   async findOne(id: number): Promise<UserEntity> {
     const user = await this.userRepository.findOne({
-      where: { id },
-      //relations: ['calificaciones'], // si tu entidad tiene esta relación
+      where: { id } 
     });
 
     if (!user) {
@@ -95,4 +94,20 @@ export class UsersService {
     const user = await this.findOne(id);
     await this.userRepository.remove(user);
   }
+
+  // Iniciar sesion
+  async login(email: string, password: string) {
+  const user = await this.userRepository.findOne({ where: { email } });
+
+  if (!user) {
+    throw new Error("Usuario no encontrado");
+  }
+
+  if (user.password !== password) {
+    throw new Error("Contraseña incorrecta");
+  }
+
+  return user;
+}
+
 }
