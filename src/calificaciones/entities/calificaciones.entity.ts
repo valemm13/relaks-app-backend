@@ -8,17 +8,15 @@ export class Calificacion {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'int' })
-    estrellas: number;
+    @Column()
+    comoEnsenia: string;
 
-    @Column("simple-array")
-    comoEnsenia: string[];
+    @Column()
+    comoCalifica: string;
 
-    @Column("simple-array")
-    comoCalifica: string[];
+    @Column()
+    cualidadEspecial: string;
 
-    @Column("simple-array")
-    cualidadEspecial: string[];
 
     @ManyToOne(() => UserEntity, users => users.calificaciones, { eager: true })
     user: UserEntity;

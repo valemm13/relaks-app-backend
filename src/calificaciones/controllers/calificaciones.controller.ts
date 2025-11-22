@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Query } from '@nestjs/common';
 import { CalificacionesService } from '../services/calificaciones.service';
 import { CreateCalificacionDto } from '../dto/create-calificacion.dto';
 
@@ -36,4 +36,13 @@ export class CalificacionesController {
     findOne(@Param('id') id: number) {
         return this.calificacionesService.findOne(id);
     }
+
+    @Get('has-rated')
+    hasRated(
+    @Query('studentId') studentId: number,
+    @Query('profesorId') profesorId: number
+    ) {
+    return this.calificacionesService.hasRated(studentId, profesorId);
+    }
+
 }

@@ -6,30 +6,28 @@ import {
 } from 'class-validator';
 
 export class CreateCalificacionDto {
-    @IsNumber()
-    estrellas: number;
+  @IsNumber()
+  estrellas: number;
 
-    @IsArray()
-    @ArrayNotEmpty()
-    @IsString({ each: true })
-    comoEnsenia: string[];
+  @IsString()
+  comoEnsenia: string;
 
-    @IsArray()
-    @ArrayNotEmpty()
-    @IsString({ each: true })
-    comoCalifica: string[];
+  @IsString()
+  comoCalifica: string;
 
-    @IsArray()
-    @ArrayNotEmpty()
-    @IsString({ each: true })
-    cualidadEspecial: string[];
+  @IsString()
+  cualidadEspecial: string;
 
-    @IsNumber()
-    userId: number;
+  @IsNumber()
+  userId: number;
 
-    @IsNumber()
-    profesorId: number;
+  @IsNumber()
+  profesorId: number;
 
-    @IsNumber()
-    materiaId: number;
+  @IsNumber()
+  materiaId: number;
+
+  @IsNumber()
+  facultadId: number;
 }
+

@@ -42,12 +42,41 @@ export class CalificacionesService {
         const user = await this.userRepo.findOne({ where: { id: dto.userId } });
         if (!user) throw new NotFoundException('Usuario no encontrado');
 
-        const profesor = await this.profRepo.findOne({ where: { id: dto.profesorId } });
+        const profesor = await this.profRepo.findOne({
+            where: { id: dto.profesorId },
+            relations: ['materias'],  // asegúrate que existe
+        });
         if (!profesor) throw new NotFoundException('Profesor no encontrado');
 
-        const materia = await this.materiaRepo.findOne({ where: { id: dto.materiaId } as any});
+        const materia = await this.materiaRepo.findOne({
+            where: { id: dto.materiaId },
+        });
         if (!materia) throw new NotFoundException('Materia no encontrada');
 
+        //  Validar que el profesor sí enseña esa materia
+        const profeDictaMateria = profesor.materias?.some(m => m.id === materia.id);
+        if (!profeDictaMateria) {
+            throw new NotFoundException('El profesor no enseña esta materia');
+        }
+
+        //  Validar relación materia -> facultad
+        if (materia.facultadId !== dto.facultadId) {
+            throw new NotFoundException('La materia no pertenece a esta facultad');
+        }
+
+        //  Validar que el estudiante no haya calificado antes
+        const yaExiste = await this.calificacionRepo.findOne({
+            where: {
+                user: { id: dto.userId },
+                profesor: { id: dto.profesorId }
+            }
+        });
+
+        if (yaExiste) {
+            throw new ConflictException('Ya calificaste a este profesor');
+        }
+
+        //  Crear la calificación
         const nueva = this.calificacionRepo.create({
             estrellas: dto.estrellas,
             comoEnsenia: dto.comoEnsenia,
@@ -76,4 +105,16 @@ export class CalificacionesService {
         if (!calificacion) throw new NotFoundException('Calificación no encontrada');
         return calificacion;
     }
+
+
+    async hasRated(studentId: number, profesorId: number) {
+    const calificacion = await this.calificacionRepo.findOne({
+        where: {
+            user: { id: studentId },
+            profesor: { id: profesorId }
+        }
+    });
+    return { hasRated: !!calificacion };
+    }
+
 }
