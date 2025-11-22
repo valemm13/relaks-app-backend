@@ -17,6 +17,11 @@ export class Calificacion {
     @Column()
     cualidadEspecial: string;
 
+    @Column()
+    estrellas: number;
+
+    @Column()
+    facultad: string;
 
     @ManyToOne(() => UserEntity, users => users.calificaciones, { eager: true })
     user: UserEntity;

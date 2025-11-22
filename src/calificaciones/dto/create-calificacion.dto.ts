@@ -27,7 +27,7 @@ export class CreateCalificacionDto {
   @IsNumber()
   materiaId: number;
 
-  @IsNumber()
-  facultadId: number;
+  @IsString()
+  facultad: string;
 }
 

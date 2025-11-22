@@ -48,7 +48,7 @@ export class CalificacionesService {
         });
         if (!profesor) throw new NotFoundException('Profesor no encontrado');
 
-        const materia = await this.materiaRepo.findOne({ where: { id: dto.materiaId } });
+        const materia = await this.materiaRepo.findOne({ where: { id: String(dto.materiaId) } });
         if (!materia) throw new NotFoundException('Materia no encontrada');
 
         //  Validar que el profesor sí enseña esa materia
@@ -58,7 +58,7 @@ export class CalificacionesService {
         }
 
         //  Validar relación materia -> facultad
-        if (materia.facultadId !== dto.facultadId) {
+        if (materia.facultad !== dto.facultad) {
             throw new NotFoundException('La materia no pertenece a esta facultad');
         }
 

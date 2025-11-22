@@ -1,6 +1,6 @@
-import {Entity,PrimaryColumn,Column,OneToOne,OneToMany,CreateDateColumn,UpdateDateColumn, IntegerType,} from 'typeorm';
+import {Entity,PrimaryColumn,Column,OneToMany, ManyToMany,CreateDateColumn,UpdateDateColumn, IntegerType,} from 'typeorm';
 import { Calificacion } from 'src/calificaciones/entities/calificaciones.entity';
-
+import { Profesor } from 'src/profes/entities/profes.entity';
 @Entity('materias')
 export class Materia {
   @PrimaryColumn()
@@ -11,6 +11,9 @@ export class Materia {
 
   @Column({ type: 'int'})
   creditos: number;
+
+  @Column()
+  facultad: string;
 
   @Column({ type: 'varchar', length: 255 })
   descripcion?: string;
@@ -31,20 +34,8 @@ export class Materia {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  /*Hacer Relaciones
+  @ManyToMany(() => Profesor, (profes) => profes.materias)
+  profes: Profesor[];
 
-  @ManyToMany() profesores
-  @OneToMany() calificaciones
-
-
-
-
-  @ManyToMany(() => Profesores, (profes) => profile.user, { cascade: true })
-  profile: Profile;
-
-  @OneToMany(() => WeeklyRoutine, (weeklyRoutine) => weeklyRoutine.user, {
-    cascade: true,
-  })
-  weeklyRoutines: WeeklyRoutine[]; */
 
 }
