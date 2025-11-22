@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Calificacion } from '../entities/calificaciones.entity';
@@ -48,9 +48,7 @@ export class CalificacionesService {
         });
         if (!profesor) throw new NotFoundException('Profesor no encontrado');
 
-        const materia = await this.materiaRepo.findOne({
-            where: { id: dto.materiaId },
-        });
+        const materia = await this.materiaRepo.findOne({ where: { id: dto.materiaId } });
         if (!materia) throw new NotFoundException('Materia no encontrada');
 
         //  Validar que el profesor sí enseña esa materia
